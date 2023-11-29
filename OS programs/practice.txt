@@ -1,0 +1,109 @@
+int frame[55] , ref[5] , mem[][] , time[] , sp , m , n , faults;
+
+void accept(){
+    int i;
+    printf("Enter the frames \n");
+    scanf("%d" , &n);
+    printf("ENter the References \n");
+    scanf("%d" , &m);
+    printf("Enter the Elements in the references \n");
+    for(i = 0 ; i < n ; i++)
+    {
+        printf("< %d > ",i);
+        scanf("%d",&ref[i]);
+    }
+}
+
+void display(){
+    int i,j;
+    printf("Reference Data \n");
+    for(i = 0; i < m ; i++)
+    {
+        printf("%d",ref[i]);
+    }
+
+    for(i = 0 ; i < n; i++)
+    {
+        for(j = 0; j < m; j++)
+        {
+            if(mem[i][j])
+            {
+                printf("%d",mem[i][j]);
+            }
+        }
+    }
+    printf("Total Number of page Faults \n" , faults);
+}
+
+int search(int sp){
+    int i;
+    for(i = 0 ; i < n; i++){
+        if(frame[i] == sp)
+            return 1;
+    }
+    return -1;
+}
+
+
+void getlru(){
+    int i , min , min_i;
+    for(i=0;i<n;i++){
+        if(time[i] < min)
+        {
+            min = time[i];
+            min_i = i;
+        }
+    }
+    return min_i;
+}
+
+void lru(){
+    int i , j , k;
+    k = search(ref[i]);
+    for(i=0;i<m && sp < m;i++){
+        if( k == -1 ){
+            frame[sp] = ref[i];
+            time[sp] = i;
+            faults++;
+            sp++;
+
+            for(j=0;j<n;j++)
+                mem[j][i] = frame[j];
+        }else{
+            time[k] = i;
+        }
+    }
+
+    for(;i < m;i++){
+        k = search(ref[i])
+        if(k == -1){
+            sp = getlru();
+            frame[sp] = ref[i];
+            time[sp] = i;
+            faults++;
+
+            for(j=0;j<n;j++)
+                mem[j][i] = frame[j];
+        }
+        else{
+            time[k] = i;
+        }
+    }
+}
+
+void main(){
+    accept();
+    lru();
+    display();
+}
+
+// LFU ->
+
+int frame[11] , mem[11][11] , count[11] , ref[11] , sp , m , n , faults;
+
+void accept(){
+    int i;
+    printf("Enter frame \n");
+    scanf("%d" , &n);
+    
+}
